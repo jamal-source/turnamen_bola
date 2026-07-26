@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manajemen Tim & Verifikasi Pemain - Piala Disdikpora Grassroot Regional Kebumen</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .sidebar { min-height: 100vh; background-color: #212529; color: #fff; z-index: 100; }
+        .sidebar .nav-link { color: #adb5bd; margin-bottom: 5px; border-radius: 5px; transition: all 0.2s; }
+        .sidebar .nav-link:hover, .sidebar .nav-link.active { color: #fff; background-color: #0d6efd; }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- SIDEBAR SUPER ADMIN -->
+        <nav class="col-md-3 col-lg-2 d-md-block sidebar collapse p-3">
+            <div class="text-center py-3 border-bottom border-secondary mb-3">
+                <i class="bi bi-trophy-fill text-warning fs-3"></i>
+                <h6 class="text-white fw-bold mt-2 mb-0">PANITIA PUSAT</h6>
+                <small class="text-muted" style="font-size: 0.75rem;">Disdikpora Grassroot Kebumen</small>
+            </div>
+            <ul class="nav flex-column">
+                <li class="nav-item"><a class="nav-link" href="dashboard.html"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="manajemen-operator.html"><i class="bi bi-people-fill me-2"></i> Akun Operator (32)</a></li>
+                <li class="nav-item"><a class="nav-link active" href="data-peserta.html"><i class="bi bi-shield-shaded me-2"></i> Data Tim & Verifikasi</a></li>
+                <li class="nav-item"><a class="nav-link" href="jadwal-pertandingan.html"><i class="bi bi-calendar-check me-2"></i> Jadwal Pertandingan</a></li>
+                <li class="nav-item"><a class="nav-link" href="cetak-dokumen.html"><i class="bi bi-printer-fill me-2"></i> Pusat Cetak Dokumen</a></li>
+                <li class="nav-item"><a class="nav-link" href="ekspor-data.html"><i class="bi bi-file-earmark-excel-fill me-2"></i> Ekspor Data</a></li>
+                <li class="nav-item"><a class="nav-link" href="pengaturan-event.html"><i class="bi bi-gear-fill me-2"></i> Pengaturan Event</a></li>
+                <hr class="border-secondary my-3">
+                <li class="nav-item"><a class="nav-link text-danger" href="../index.html"><i class="bi bi-box-arrow-right me-2"></i> Keluar Sistem</a></li>
+            </ul>
+        </nav>
+
+        <!-- MAIN CONTENT -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+            
+            <!-- HEADER BAR -->
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom">
+                <div>
+                    <h2 class="h3 fw-bold text-dark"><i class="bi bi-shield-shaded text-primary me-2"></i> Manajemen Entitas Tim & Verifikasi Pemain</h2>
+                    <p class="text-muted mb-0">Pilih baris Sekolah Sepak Bola (SSB) untuk mengelola squad pemain dan verifikasi berkas.</p>
+                </div>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <span class="badge bg-primary p-2 shadow-sm"><i class="bi bi-shield me-1"></i> Total 32 Tim Terdaftar</span>
+                </div>
+            </div>
+
+            <!-- FILTER & PENCARIAN -->
+            <div class="card border-0 shadow-sm p-3 mb-4">
+                <div class="row g-3 align-items-center">
+                    <div class="col-md-3">
+                        <label class="form-label small fw-bold text-muted">Filter Kategori</label>
+                        <select class="form-select form-select-sm">
+                            <option value="">Semua Kategori (KU-10 & KU-12)</option>
+                            <option value="ku10">KU-10</option>
+                            <option value="ku12">KU-12</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label small fw-bold text-muted">Filter Status Verifikasi</label>
+                        <select class="form-select form-select-sm">
+                            <option value="">Semua Status Tim</option>
+                            <option value="complete">Lolos Semua (Selesai)</option>
+                            <option value="pending">Menunggu Verifikasi</option>
+                            <option value="revision">Ada Catatan Revisi</option>
+                        </select>
+                    </div>
+                    <div class="col-md-5">
+                        <label class="form-label small fw-bold text-muted">Pencarian Tim (SSB)</label>
+                        <div class="input-group input-group-sm">
+                            <input type="text" class="form-control" placeholder="Cari nama SSB atau kecamatan...">
+                            <button class="btn btn-primary" type="button"><i class="bi bi-search"></i> Cari</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TABEL DIREKTORI TIM (SSB) -->
+            <div class="card border-0 shadow-sm p-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold text-dark mb-0"><i class="bi bi-list-nested text-secondary me-2"></i> Daftar Entitas Sekolah Sepak Bola (32 SSB)</h5>
+                    <small class="text-muted">Klik tombol "Kelola & Verifikasi" untuk memeriksa pemain per tim</small>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="text-center" width="5%">#</th>
+                                <th width="30%">Nama Sekolah Sepak Bola (SSB)</th>
+                                <th width="15%">Kategori</th>
+                                <th width="15%">Total Pemain</th>
+                                <th width="20%">Status Verifikasi Tim</th>
+                                <th class="text-center" width="15%">Aksi Squad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center">1</td>
+                                <td>
+                                    <span class="fw-bold text-dark">SSB Garuda Muda</span><br>
+                                    <small class="text-muted"><i class="bi bi-geo-alt me-1"></i>Kec. Sruweng</small>
+                                </td>
+                                <td><span class="badge bg-info text-dark">KU-10</span></td>
+                                <td>18 Orang</td>
+                                <td><span class="badge bg-success">Lolos Semua (18/18)</span></td>
+                                <td class="text-center">
+                                    <button class="btn btn-sm btn-outline-primary fw-bold" data-bs-toggle="modal" data-bs-target="#modalDetailTim">
+                                        <i class="bi bi-eye me-1"></i> Kelola Squad
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">2</td>
+                                <td>
+                                    <span class="fw-bold text-dark">SSB Putra Pandan Kuning</span><br>
+                                    <small class="text-muted"><i class="bi bi-geo-alt me-1"></i>Kec. Kebumen</small>
+                                </td>
+                                <td><span class="badge bg-warning text-dark">KU-12</span></td>
+                                <td>16 Orang</td>
+                                <td><span class="badge bg-warning text-dark">12 Lolos / 4 Pending</span></td>
+                                <td class="text-center">
+                                    <button class="btn btn-sm btn-primary fw-bold" data-bs-toggle="modal" data-bs-target="#modalDetailTim">
+                                        <i class="bi bi-check2-square me-1"></i> Verifikasi
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">3</td>
+                                <td>
+                                    <span class="fw-bold text-dark">SSB Meteor Kebumen</span><br>
+                                    <small class="text-muted"><i class="bi bi-geo-alt me-1"></i>Kec. Pejagoan</small>
+                                </td>
+                                <td><span class="badge bg-info text-dark">KU-10</span></td>
+                                <td>15 Orang</td>
+                                <td><span class="badge bg-danger">10 Lolos / 5 Revisi</span></td>
+                                <td class="text-center">
+                                    <button class="btn btn-sm btn-primary fw-bold" data-bs-toggle="modal" data-bs-target="#modalDetailTim">
+                                        <i class="bi bi-check2-square me-1"></i> Verifikasi
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- PAGINATION -->
+                <nav class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                    <small class="text-muted">Menampilkan 1 hingga 3 dari total 32 SSB Peserta</small>
+                    <ul class="pagination pagination-sm mb-0">
+                        <li class="page-item disabled"><a class="page-link" href="#">Sebelumnya</a></li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Selanjutnya</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+        </main>
+    </div>
+</div>
+
+<!-- MODAL DETAIL SQUAD & VERIFIKASI TIM -->
+<div class="modal fade" id="modalDetailTim" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <div>
+                    <h5 class="modal-title fw-bold"><i class="bi bi-shield-shaded me-2 text-warning"></i> Squad Pemain: SSB Putra Pandan Kuning</h5>
+                    <small class="text-light opacity-75">Panel Pemeriksaan Dokumen & Keabsahan Pemain per Tim</small>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                
+                <!-- INFORMASI SINGKAT TIM -->
+                <div class="alert alert-secondary d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <strong>Manajer Tim:</strong> Budi Santoso | <strong>Kontak:</strong> 081234567890 | <strong>Jersey:</strong> Kuning-Hitam
+                    </div>
+                    <span class="badge bg-dark">Kategori: KU-12</span>
+                </div>
+
+                <!-- TABEL PEMAIN DALAM TIM TERSEBUT -->
+                <h6 class="fw-bold text-dark mb-3"><i class="bi bi-people-fill text-primary me-1"></i> Daftar Pemain yang Diinput Operator SSB:</h6>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="text-center" width="5%">No</th>
+                                <th width="25%">Nama Pemain & No. Punggung</th>
+                                <th width="15%">NIK / Kelahiran</th>
+                                <th width="20%">Berkas Dokumen (Akta/KK/KIA)</th>
+                                <th width="20%">Status Verifikasi</th>
+                                <th class="text-center" width="15%">Aksi Verifikasi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center">1</td>
+                                <td>
+                                    <span class="fw-bold">Rizky Ramadhan</span><br>
+                                    <small class="text-muted">No. Punggung: 7 • Penyerang</small>
+                                </td>
+                                <td>3305xxxx / 2014</td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-outline-secondary py-0 px-2" title="Lihat Akta"><i class="bi bi-file-earmark-pdf text-danger"></i> Akta</a>
+                                    <a href="#" class="btn btn-sm btn-outline-secondary py-0 px-2" title="Lihat KK"><i class="bi bi-file-earmark-pdf text-danger"></i> KK</a>
+                                </td>
+                                <td><span class="badge bg-warning text-dark">Menunggu Verifikasi</span></td>
+                                <td class="text-center">
+                                    <button class="btn btn-sm btn-success py-0 px-2" title="Loloskan"><i class="bi bi-check-lg"></i></button>
+                                    <button class="btn btn-sm btn-danger py-0 px-2" title="Tolak/Revisi"><i class="bi bi-x-lg"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">2</td>
+                                <td>
+                                    <span class="fw-bold">Ahmad Dani</span><br>
+                                    <small class="text-muted">No. Punggung: 10 • Gelandang</small>
+                                </td>
+                                <td>3305xxxx / 2014</td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-outline-secondary py-0 px-2" title="Lihat Akta"><i class="bi bi-file-earmark-pdf text-danger"></i> Akta</a>
+                                    <a href="#" class="btn btn-sm btn-outline-secondary py-0 px-2" title="Lihat KK"><i class="bi bi-file-earmark-pdf text-danger"></i> KK</a>
+                                </td>
+                                <td><span class="badge bg-success">Lolos Verifikasi</span></td>
+                                <td class="text-center">
+                                    <button class="btn btn-sm btn-outline-secondary py-0 px-2" disabled><i class="bi bi-check-all"></i> Selesai</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-primary btn-sm"><i class="bi bi-printer me-1"></i> Cetak Manifes Tim Ini</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap 5 JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

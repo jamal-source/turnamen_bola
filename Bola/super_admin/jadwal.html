@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jadwal Pertandingan - Piala Disdikpora Grassroot Regional Kebumen</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .sidebar { min-height: 100vh; background-color: #212529; color: #fff; z-index: 100; }
+        .sidebar .nav-link { color: #adb5bd; margin-bottom: 5px; border-radius: 5px; transition: all 0.2s; }
+        .sidebar .nav-link:hover, .sidebar .nav-link.active { color: #fff; background-color: #0d6efd; }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- SIDEBAR SUPER ADMIN -->
+        <nav class="col-md-3 col-lg-2 d-md-block sidebar collapse p-3">
+            <div class="text-center py-3 border-bottom border-secondary mb-3">
+                <i class="bi bi-trophy-fill text-warning fs-3"></i>
+                <h6 class="text-white fw-bold mt-2 mb-0">PANITIA PUSAT</h6>
+                <small class="text-muted" style="font-size: 0.75rem;">Disdikpora Grassroot Kebumen</small>
+            </div>
+            <ul class="nav flex-column">
+                <li class="nav-item"><a class="nav-link" href="dashboard.html"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="manajemen-operator.html"><i class="bi bi-people-fill me-2"></i> Akun Operator (32)</a></li>
+                <li class="nav-item"><a class="nav-link" href="data-peserta.html"><i class="bi bi-shield-shaded me-2"></i> Data Tim & Verifikasi</a></li>
+                <li class="nav-item"><a class="nav-link active" href="jadwal-pertandingan.html"><i class="bi bi-calendar-check me-2"></i> Jadwal Pertandingan</a></li>
+                <li class="nav-item"><a class="nav-link" href="cetak-dokumen.html"><i class="bi bi-printer-fill me-2"></i> Pusat Cetak Dokumen</a></li>
+                <li class="nav-item"><a class="nav-link" href="ekspor-data.html"><i class="bi bi-file-earmark-excel-fill me-2"></i> Ekspor Data</a></li>
+                <li class="nav-item"><a class="nav-link" href="pengaturan-event.html"><i class="bi bi-gear-fill me-2"></i> Pengaturan Event</a></li>
+                <hr class="border-secondary my-3">
+                <li class="nav-item"><a class="nav-link text-danger" href="../index.html"><i class="bi bi-box-arrow-right me-2"></i> Keluar Sistem</a></li>
+            </ul>
+        </nav>
+
+        <!-- MAIN CONTENT -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+            
+            <!-- HEADER BAR -->
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom">
+                <div>
+                    <h2 class="h3 fw-bold text-dark"><i class="bi bi-calendar-check text-primary me-2"></i> Pengelolaan Jadwal Pertandingan</h2>
+                    <p class="text-muted mb-0">Atur bagan, waktu kick-off, lokasi stadion, dan publikasi jadwal tanding turnamen.</p>
+                </div>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <button class="btn btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#modalTambahJadwal">
+                        <i class="bi bi-plus-circle-fill me-1"></i> Buat Jadwal Baru
+                    </button>
+                </div>
+            </div>
+
+            <!-- KARTU STATISTIK & FILTER OUTPUT -->
+            <div class="card border-0 shadow-sm p-3 mb-4">
+                <div class="row g-3 align-items-center">
+                    <div class="col-md-3">
+                        <label class="form-label small fw-bold text-muted">Filter Kategori Usia</label>
+                        <select class="form-select form-select-sm">
+                            <option value="">Semua Kategori (KU-10 & KU-12)</option>
+                            <option value="ku10">KU-10</option>
+                            <option value="ku12">KU-12</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label small fw-bold text-muted">Filter Lokasi Stadion</label>
+                        <select class="form-select form-select-sm">
+                            <option value="">Semua Lokasi / Lapangan</option>
+                            <option value="chandradimuka">Stadion Chandradimuka Kebumen</option>
+                            <option value="pertamina">Lapangan Pendopo / Lainnya</option>
+                        </select>
+                    </div>
+                    <div class="col-md-5">
+                        <label class="form-label small fw-bold text-muted">Pencarian Tim</label>
+                        <div class="input-group input-group-sm">
+                            <input type="text" class="form-control" placeholder="Cari nama SSB yang bertanding...">
+                            <button class="btn btn-outline-secondary" type="button"><i class="bi bi-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TABEL OUTPUT DAFTAR JADWAL PERTANDINGAN -->
+            <div class="card border-0 shadow-sm p-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold text-dark mb-0"><i class="bi bi-list-task text-secondary me-2"></i> Output Bagan & Jadwal Aktif</h5>
+                    <span class="badge bg-secondary p-2">Total: 16 Pertandingan Terjadwal</span>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="text-center" width="5%">#</th>
+                                <th width="15%">Kategori & Babak</th>
+                                <th width="35%">Tim Bertanding (Home vs Away)</th>
+                                <th width="20%">Waktu & Tanggal</th>
+                                <th width="15%">Lokasi Lapangan</th>
+                                <th class="text-center" width="10%">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center">1</td>
+                                <td>
+                                    <span class="badge bg-info text-dark mb-1">KU-10</span><br>
+                                    <small class="text-muted">Penyisihan Grup A</small>
+                                </td>
+                                <td>
+                                    <div class="fw-bold text-dark">SSB Garuda Muda Sruweng</div>
+                                    <small class="text-muted">vs</small>
+                                    <div class="fw-bold text-dark">SSB Meteor Kebumen</div>
+                                </td>
+                                <td>
+                                    <i class="bi bi-calendar-event me-1 text-primary"></i> 25 Juli 2026<br>
+                                    <small class="text-muted"><i class="bi bi-clock me-1"></i> 08:00 WIB</small>
+                                </td>
+                                <td><span class="small">Stadion Chandradimuka</span></td>
+                                <td class="text-center">
+                                    <button class="btn btn-sm btn-outline-primary" title="Edit Jadwal" data-bs-toggle="modal" data-bs-target="#modalEditJadwal"><i class="bi bi-pencil-square"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger" title="Hapus Jadwal"><i class="bi bi-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">2</td>
+                                <td>
+                                    <span class="badge bg-warning text-dark mb-1">KU-12</span><br>
+                                    <small class="text-muted">Penyisihan Grup B</small>
+                                </td>
+                                <td>
+                                    <div class="fw-bold text-dark">SSB Putra Pandan Kuning</div>
+                                    <small class="text-muted">vs</small>
+                                    <div class="fw-bold text-dark">SSB Bina Remaja</div>
+                                </td>
+                                <td>
+                                    <i class="bi bi-calendar-event me-1 text-primary"></i> 25 Juli 2026<br>
+                                    <small class="text-muted"><i class="bi bi-clock me-1"></i> 09:30 WIB</small>
+                                </td>
+                                <td><span class="small">Stadion Chandradimuka</span></td>
+                                <td class="text-center">
+                                    <button class="btn btn-sm btn-outline-primary" title="Edit Jadwal" data-bs-toggle="modal" data-bs-target="#modalEditJadwal"><i class="bi bi-pencil-square"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger" title="Hapus Jadwal"><i class="bi bi-trash"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- PAGINATION -->
+                <nav class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                    <small class="text-muted">Menampilkan 1 hingga 2 dari total 16 pertandingan</small>
+                    <ul class="pagination pagination-sm mb-0">
+                        <li class="page-item disabled"><a class="page-link" href="#">Sebelumnya</a></li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Selanjutnya</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+        </main>
+    </div>
+</div>
+
+<!-- MODAL INPUT: BUAT JADWAL BARU -->
+<div class="modal fade" id="modalTambahJadwal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title fw-bold"><i class="bi bi-calendar-plus text-warning me-2"></i> Input Jadwal Pertandingan Baru</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold small">Kelompok Usia (Kategori)</label>
+                            <select class="form-select">
+                                <option value="ku10">KU-10 (Kelahiran 2016)</option>
+                                <option value="ku12">KU-12 (Kelahiran 2014)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold small">Babak / Fase Turnamen</label>
+                            <select class="form-select">
+                                <option value="penyisihan">Babak Penyisihan Grup</option>
+                                <option value="8besar">Babak 8 Besar</option>
+                                <option value="semifinal">Semifinal</option>
+                                <option value="final">Final / Perebutan Juara 3</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold small">Tim Pertama (Home)</label>
+                            <select class="form-select">
+                                <option value="">-- Pilih SSB Peserta --</option>
+                                <option value="1">SSB Garuda Muda Sruweng</option>
+                                <option value="2">SSB Putra Pandan Kuning</option>
+                                <option value="3">SSB Meteor Kebumen</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold small">Tim Kedua (Away)</label>
+                            <select class="form-select">
+                                <option value="">-- Pilih SSB Peserta --</option>
+                                <option value="1">SSB Garuda Muda Sruweng</option>
+                                <option value="2">SSB Putra Pandan Kuning</option>
+                                <option value="3">SSB Meteor Kebumen</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold small">Tanggal Pertandingan</label>
+                            <input type="date" class="form-control">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold small">Jam Kick-Off</label>
+                            <input type="time" class="form-control">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold small">Lokasi / Stadion</label>
+                            <select class="form-select">
+                                <option value="chandradimuka">Stadion Chandradimuka Kebumen</option>
+                                <option value="alternatif">Lapangan Pendukung Utama</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Batal</button>
+                <button type="button" class="btn btn-primary btn-sm"><i class="bi bi-save me-1"></i> Simpan Jadwal</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL EDIT JADWAL -->
+<div class="modal fade" id="modalEditJadwal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title fw-bold"><i class="bi bi-pencil-square text-warning me-2"></i> Edit Jadwal Pertandingan</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold small">Kelompok Usia (Kategori)</label>
+                            <select class="form-select">
+                                <option value="ku10" selected>KU-10 (Kelahiran 2016)</option>
+                                <option value="ku12">KU-12 (Kelahiran 2014)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold small">Babak / Fase Turnamen</label>
+                            <select class="form-select">
+                                <option value="penyisihan" selected>Babak Penyisihan Grup</option>
+                                <option value="8besar">Babak 8 Besar</option>
+                                <option value="semifinal">Semifinal</option>
+                                <option value="final">Final</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold small">Tim Pertama (Home)</label>
+                            <input type="text" class="form-control" value="SSB Garuda Muda Sruweng" readonly>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold small">Tim Kedua (Away)</label>
+                            <input type="text" class="form-control" value="SSB Meteor Kebumen" readonly>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold small">Tanggal Pertandingan</label>
+                            <input type="date" class="form-control" value="2026-07-25">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold small">Jam Kick-Off</label>
+                            <input type="time" class="form-control" value="08:00">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold small">Lokasi / Stadion</label>
+                            <select class="form-select">
+                                <option value="chandradimuka" selected>Stadion Chandradimuka Kebumen</option>
+                                <option value="alternatif">Lapangan Pendukung Utama</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Batal</button>
+                <button type="button" class="btn btn-primary btn-sm"><i class="bi bi-save me-1"></i> Perbarui Jadwal</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap 5 JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

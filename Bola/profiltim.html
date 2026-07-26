@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Tim SSB - Panel Operator</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .sidebar { min-height: 100vh; background-color: #212529; color: #fff; }
+        .sidebar .nav-link { color: #adb5bd; margin-bottom: 5px; }
+        .sidebar .nav-link:hover, .sidebar .nav-link.active { color: #fff; background-color: #0d6efd; border-radius: 5px; }
+        .team-logo { width: 130px; height: 130px; object-fit: contain; background: #fff; padding: 12px; border-radius: 50%; border: 3px solid #dee2e6; }
+        .jersey-box { width: 25px; height: 25px; display: inline-block; border-radius: 50%; border: 1px solid #ccc; vertical-align: middle; }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- SIDEBAR -->
+        <nav class="col-md-3 col-lg-2 d-md-block sidebar collapse p-3">
+            <h4 class="text-white text-center py-3 border-bottom border-secondary mb-3">
+                <i class="bi bi-shield-shaded text-primary"></i> Operator Panel
+            </h4>
+            <ul class="nav flex-column">
+                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link active" href="#"><i class="bi bi-shield-fill me-2"></i> Profil Tim SSB</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-people-fill me-2"></i> Data Pemain</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-printer-fill me-2"></i> Cetak Dokumen</a></li>
+            </ul>
+        </nav>
+
+        <!-- MAIN CONTENT (OUTPUT UTAMA) -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+            
+            <!-- HEADER -->
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h2 class="h3"><i class="bi bi-shield-fill text-primary me-2"></i> Profil Resmi Tim / SSB</h2>
+                <!-- TOMBOL PEMICU MODAL INPUT/EDIT -->
+                <button class="btn btn-warning text-dark fw-bold shadow-sm" data-bs-toggle="modal" data-bs-target="#modalEditProfil">
+                    <i class="bi bi-pencil-square me-1"></i> Edit & Perbarui Profil Tim
+                </button>
+            </div>
+
+            <!-- INFO BANNER -->
+            <div class="alert alert-info border-0 shadow-sm mb-4" role="alert">
+                <i class="bi bi-info-circle-fill me-2"></i> Halaman ini menampilkan data resmi Sekolah Sepak Bola Anda yang terdaftar pada sistem turnamen <strong>Piala Disdikpora Kebumen 2026</strong>.
+            </div>
+
+            <div class="row">
+                <!-- KARTU LOGO & STATUS (KIRI) -->
+                <div class="col-lg-4 mb-4">
+                    <div class="card shadow-sm text-center p-4 border-0">
+                        <div class="d-flex justify-content-center mb-3">
+                            <img src="https://via.placeholder.com/150" class="team-logo shadow-sm" alt="Logo SSB">
+                        </div>
+                        <h4 class="fw-bold mb-1">SSB Garuda Muda Sruweng</h4>
+                        <p class="text-muted small mb-3"><i class="bi bi-geo-alt-fill text-danger me-1"></i> Kec. Sruweng, Kab. Kebumen</p>
+                        <span class="badge bg-success py-2 px-3 mb-3"><i class="bi bi-check-circle-fill me-1"></i> Terverifikasi Panitia</span>
+                        
+                        <hr class="text-muted">
+                        
+                        <div class="text-start small">
+                            <p class="mb-2 text-muted fw-bold">Kategori Turnamen Diikuti:</p>
+                            <span class="badge bg-primary text-white me-1 p-2">KU 10 Tahun</span>
+                            <span class="badge bg-primary text-white p-2">KU 12 Tahun</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- KARTU RINCIAN DETAIL INFORMASI (KANAN) -->
+                <div class="col-lg-8">
+                    <div class="card shadow-sm border-0 mb-4">
+                        <div class="card-header bg-dark text-white py-3">
+                            <h5 class="mb-0"><i class="bi bi-card-list me-2"></i> Rincian Informasi Klub & Kepengurusan</h5>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-borderless align-middle mb-0">
+                                <tr>
+                                    <td width="35%" class="text-muted">Nama Resmi SSB</td>
+                                    <td width="2%">:</td>
+                                    <td class="fw-bold">Sekolah Sepak Bola Garuda Muda Sruweng</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted">Tahun Berdiri</td>
+                                    <td>:</td>
+                                    <td>2018</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted">Alamat Sekretariat</td>
+                                    <td>:</td>
+                                    <td>Lapangan Desa Sruweng, RT 01/RW 02, Kec. Sruweng</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted">Manajer Tim</td>
+                                    <td>:</td>
+                                    <td>Bpk. H. Sutrisno, S.Pd.</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted">No. WhatsApp Official</td>
+                                    <td>:</td>
+                                    <td><a href="https://wa.me/6281234567890" target="_blank" class="text-decoration-none fw-bold text-success"><i class="bi bi-whatsapp me-1"></i> 0812-3456-7890</a></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted">Pelatih Kepala KU 10</td>
+                                    <td>:</td>
+                                    <td>Coach Ahmad Fauzi</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted">Pelatih Kepala KU 12</td>
+                                    <td>:</td>
+                                    <td>Coach Joko Susilo</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted">Warna Jersey</td>
+                                    <td>:</td>
+                                    <td>
+                                        <span class="jersey-box bg-primary me-1" title="Biru"></span> Biru (Home) &nbsp;|&nbsp; 
+                                        <span class="jersey-box bg-white ms-1 me-1 shadow-sm" title="Putih"></span> Putih (Away)
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- KARTU DOKUMEN LEGALITAS -->
+                    <div class="card shadow-sm border-0">
+                        <div class="card-header bg-secondary text-white py-3">
+                            <h5 class="mb-0"><i class="bi bi-file-earmark-pdf-fill me-2"></i> Dokumen Surat Mandat / Rekomendasi</h5>
+                        </div>
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-1 fw-bold text-dark">Surat_Mandat_SSB_Garuda_Muda.pdf</h6>
+                                <small class="text-muted">Status: Diunggah dan valid • Ukuran: 1.2 MB</small>
+                            </div>
+                            <button class="btn btn-sm btn-outline-primary"><i class="bi bi-download me-1"></i> Unduh File</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- ========================================== -->
+<!-- MODAL FORM INPUT / EDIT PROFIL TIM (TERSEMBUNYI) -->
+<!-- ========================================== -->
+<div class="modal fade" id="modalEditProfil" tabindex="-1" aria-labelledby="modalEditLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header bg-warning text-dark">
+                <h5 class="modal-title fw-bold" id="modalEditLabel"><i class="bi bi-pencil-square me-2"></i> Form Input & Perbarui Profil Tim</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form>
+                    <!-- BAGIAN 1 -->
+                    <h6 class="text-primary fw-bold mb-3"><i class="bi bi-info-circle me-1"></i> 1. Informasi Umum Klub</h6>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Nama Resmi SSB <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" value="Sekolah Sepak Bola Garuda Muda Sruweng">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Tahun Berdiri <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" value="2018">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Kecamatan Asal <span class="text-danger">*</span></label>
+                            <select class="form-select">
+                                <option selected>Sruweng</option>
+                                <option>Kebumen</option>
+                                <option>Alian</option>
+                                <option>Pejagoan</option>
+                                <option>Kutowinangun</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-md-12">
+                            <label class="form-label">Alamat Lengkap Sekretariat / Lapangan <span class="text-danger">*</span></label>
+                            <textarea class="form-control" rows="2">Lapangan Desa Sruweng, RT 01/RW 02, Kec. Sruweng, Kab. Kebumen</textarea>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <!-- BAGIAN 2 -->
+                    <h6 class="text-primary fw-bold mb-3"><i class="bi bi-people me-1"></i> 2. Data Pengurus & Pelatih</h6>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Nama Manajer Tim <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" value="Bpk. H. Sutrisno, S.Pd.">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">No. WhatsApp Official <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" value="081234567890">
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label">Pelatih Kepala KU 10</label>
+                            <input type="text" class="form-control" value="Coach Ahmad Fauzi">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Pelatih Kepala KU 12</label>
+                            <input type="text" class="form-control" value="Coach Joko Susilo">
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <!-- BAGIAN 3 -->
+                    <h6 class="text-primary fw-bold mb-3"><i class="bi bi-trophy me-1"></i> 3. Kategori & Atribut Jersey</h6>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label d-block">Kategori Usia Diikuti <span class="text-danger">*</span></label>
+                            <div class="form-check form-check-inline mt-1">
+                                <input class="form-check-input" type="checkbox" id="edit-ku10" checked>
+                                <label class="form-check-label" for="edit-ku10">KU 10 Tahun</label>
+                            </div>
+                            <div class="form-check form-check-inline mt-1">
+                                <input class="form-check-input" type="checkbox" id="edit-ku12" checked>
+                                <label class="form-check-label" for="edit-ku12">KU 12 Tahun</label>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Warna Jersey Utama</label>
+                            <input type="text" class="form-control" value="Biru">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Warna Jersey Cadangan</label>
+                            <input type="text" class="form-control" value="Putih">
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <!-- BAGIAN 4 -->
+                    <h6 class="text-primary fw-bold mb-3"><i class="bi bi-cloud-arrow-up me-1"></i> 4. Berkas Unggahan</h6>
+                    <div class="row mb-2">
+                        <div class="col-md-6">
+                            <label class="form-label small">Logo Resmi SSB (PNG / JPG Transparan)</label>
+                            <input type="file" class="form-control form-control-sm" accept="image/*">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small">Surat Mandat / Rekomendasi (PDF)</label>
+                            <input type="file" class="form-control form-control-sm" accept=".pdf">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer bg-light">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <button type="button" class="btn btn-primary px-4" onclick="alert('Data profil tim berhasil disimpan!')">
+                    <i class="bi bi-save me-1"></i> Simpan Perubahan
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap 5 JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

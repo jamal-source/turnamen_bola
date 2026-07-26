@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengaturan Event & Master Data - Piala Disdikpora Grassroot Regional Kebumen</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .sidebar { min-height: 100vh; background-color: #212529; color: #fff; z-index: 100; }
+        .sidebar .nav-link { color: #adb5bd; margin-bottom: 5px; border-radius: 5px; transition: all 0.2s; }
+        .sidebar .nav-link:hover, .sidebar .nav-link.active { color: #fff; background-color: #0d6efd; }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- SIDEBAR SUPER ADMIN -->
+        <nav class="col-md-3 col-lg-2 d-md-block sidebar collapse p-3">
+            <div class="text-center py-3 border-bottom border-secondary mb-3">
+                <i class="bi bi-trophy-fill text-warning fs-3"></i>
+                <h6 class="text-white fw-bold mt-2 mb-0">PANITIA PUSAT</h6>
+                <small class="text-muted" style="font-size: 0.75rem;">Disdikpora Grassroot Kebumen</small>
+            </div>
+            <ul class="nav flex-column">
+                <li class="nav-item"><a class="nav-link" href="dashboard.html"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="manajemen-operator.html"><i class="bi bi-people-fill me-2"></i> Akun Operator (32)</a></li>
+                <li class="nav-item"><a class="nav-link" href="data-peserta.html"><i class="bi bi-shield-shaded me-2"></i> Data Tim & Verifikasi</a></li>
+                <li class="nav-item"><a class="nav-link" href="jadwal-pertandingan.html"><i class="bi bi-calendar-check me-2"></i> Jadwal Pertandingan</a></li>
+                <li class="nav-item"><a class="nav-link" href="cetak-dokumen.html"><i class="bi bi-printer-fill me-2"></i> Pusat Cetak Dokumen</a></li>
+                <li class="nav-item"><a class="nav-link" href="ekspor-data.html"><i class="bi bi-file-earmark-excel-fill me-2"></i> Ekspor Data</a></li>
+                <li class="nav-item"><a class="nav-link active" href="pengaturan-event.html"><i class="bi bi-gear-fill me-2"></i> Pengaturan Event</a></li>
+                <hr class="border-secondary my-3">
+                <li class="nav-item"><a class="nav-link text-danger" href="../index.html"><i class="bi bi-box-arrow-right me-2"></i> Keluar Sistem</a></li>
+            </ul>
+        </nav>
+
+        <!-- MAIN CONTENT -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+            
+            <!-- HEADER BAR -->
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom">
+                <div>
+                    <h2 class="h3 fw-bold text-dark"><i class="bi bi-gear-fill text-primary me-2"></i> Pengaturan Event & Master Data</h2>
+                    <p class="text-muted mb-0">Kelola identitas turnamen, logo resmi, kelompok usia, serta utilitas pencadangan database sistem.</p>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                
+                <!-- 1. BAGIAN IDENTITAS TURNAMEN & LOGO -->
+                <div class="col-lg-6">
+                    <div class="card border-0 shadow-sm p-4 h-100">
+                        <h5 class="fw-bold text-dark mb-3"><i class="bi bi-shield-shaded text-primary me-2"></i> Identitas & Logo Turnamen</h5>
+                        <form>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold small">Nama Resmi Turnamen</label>
+                                <input type="text" class="form-control" value="Piala Disdikpora Grassroot Regional Kebumen 2026">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold small">Instansi / Penyelenggara</label>
+                                <input type="text" class="form-control" value="Dinas Pendidikan, Kepemudaan, dan Olahraga Kab. Kebumen">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold small">Lokasi Utama / Stadion</label>
+                                <input type="text" class="form-control" value="Stadion Chandradimuka Kebumen">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold small">Upload Logo Resmi (PNG/JPG)</label>
+                                <input type="file" class="form-control">
+                                <div class="form-text">Format logo akan otomatis disesuaikan untuk kop surat dan ID card.</div>
+                            </div>
+                            <button type="button" class="btn btn-primary btn-sm"><i class="bi bi-save me-1"></i> Simpan Perubahan Identitas</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- 2. BAGIAN MASTER KELOMPOK USIA -->
+                <div class="col-lg-6">
+                    <div class="card border-0 shadow-sm p-4 h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="fw-bold text-dark mb-0"><i class="bi bi-tags-fill text-success me-2"></i> Master Kelompok Usia (KU)</h5>
+                            <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#modalTambahKU"><i class="bi bi-plus-lg me-1"></i> Tambah Kategori</button>
+                        </div>
+                        <p class="text-muted small">Atur batas tahun kelahiran pemain agar sistem otomatis menolak input data yang tidak sesuai.</p>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-bordered align-middle mb-3">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Kategori</th>
+                                        <th>Batas Tahun Lahir</th>
+                                        <th>Status</th>
+                                        <th class="text-center">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="fw-bold">KU-10</td>
+                                        <td>Maksimal Kelahiran 2016</td>
+                                        <td><span class="badge bg-success">Aktif</span></td>
+                                        <td class="text-center">
+                                            <button class="btn btn-sm btn-outline-primary py-0 px-2"><i class="bi bi-pencil"></i></button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">KU-12</td>
+                                        <td>Maksimal Kelahiran 2014</td>
+                                        <td><span class="badge bg-success">Aktif</span></td>
+                                        <td class="text-center">
+                                            <button class="btn btn-sm btn-outline-primary py-0 px-2"><i class="bi bi-pencil"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="alert alert-secondary small mb-0">
+                            <i class="bi bi-info-circle-fill me-1 text-primary"></i> Perubahan batas tahun lahir akan memengaruhi validasi otomatis pada akun operator SSB saat mendaftarkan pemain.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. BAGIAN BACKUP & RESTORE DATABASE -->
+                <div class="col-12">
+                    <div class="card border-0 shadow-sm p-4">
+                        <h5 class="fw-bold text-dark mb-3"><i class="bi bi-database-fill-gear text-warning me-2"></i> Cadangan & Pemulihan Basis Data (Backup Database)</h5>
+                        <p class="text-muted mb-4">Amankan seluruh data sistem (data tim, verifikasi berkas pemain, akun operator, hingga jadwal pertandingan) secara berkala untuk mengantisipasi kehilangan data.</p>
+                        
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="p-3 border rounded bg-light d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="fw-bold mb-1"><i class="bi bi-cloud-arrow-down-fill text-primary me-2"></i> Unduh Cadangan Database</h6>
+                                        <small class="text-muted">Unduh file backup (.sql) dari server saat ini.</small>
+                                    </div>
+                                    <button class="btn btn-primary btn-sm"><i class="bi bi-download me-1"></i> Backup (.SQL)</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3 border rounded bg-light d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="fw-bold mb-1"><i class="bi bi-arrow-counterclockwise text-danger me-2"></i> Pulihkan Database</h6>
+                                        <small class="text-muted">Upload file .sql untuk mengembalikan data.</small>
+                                    </div>
+                                    <button class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalRestore"><i class="bi bi-upload me-1"></i> Restore</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+</div>
+
+<!-- MODAL TAMBAH KELOMPOK USIA -->
+<div class="modal fade" id="modalTambahKU" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title fw-bold"><i class="bi bi-plus-circle text-warning me-2"></i> Tambah Kategori Kelompok Usia</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small">Nama Kategori (Contoh: KU-14)</label>
+                        <input type="text" class="form-control" placeholder="Masukkan nama kategori">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small">Batas Tahun Kelahiran Minimal/Maksimal</label>
+                        <input type="text" class="form-control" placeholder="Contoh: Kelahiran maksimal 2012">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small">Status Kategori</label>
+                        <select class="form-select">
+                            <option value="active">Aktif</option>
+                            <option value="inactive">Non-Aktif</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Batal</button>
+                <button type="button" class="btn btn-primary btn-sm"><i class="bi bi-save me-1"></i> Simpan Kategori</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL RESTORE DATABASE -->
+<div class="modal fade" id="modalRestore" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title fw-bold"><i class="bi bi-exclamation-triangle-fill me-2"></i> Konfirmasi Pemulihan Database</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="alert alert-warning small mb-3">
+                    <strong>Peringatan!</strong> Melakukan restore database akan menimpa seluruh data saat ini dengan data dari file cadangan yang diunggah. Pastikan Anda telah mencadangkan data terbaru sebelum melanjutkan.
+                </div>
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small">Pilih File Cadangan (.sql)</label>
+                        <input type="file" class="form-control" accept=".sql">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Batal</button>
+                <button type="button" class="btn btn-danger btn-sm"><i class="bi bi-upload me-1"></i> Proses Restore Sekarang</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap 5 JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

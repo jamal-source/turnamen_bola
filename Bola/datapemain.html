@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manajemen Data Pemain - Panel Operator</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .sidebar { min-height: 100vh; background-color: #212529; color: #fff; }
+        .sidebar .nav-link { color: #adb5bd; margin-bottom: 5px; }
+        .sidebar .nav-link:hover, .sidebar .nav-link.active { color: #fff; background-color: #0d6efd; border-radius: 5px; }
+        .player-img { width: 45px; height: 45px; object-fit: cover; border-radius: 50%; }
+
+        /* --- CSS KHUSUS UNTUK ID CARD PREVIEW (CR80 Scale) --- */
+        .id-card-wrapper {
+            display: flex; justify-content: center; align-items: center;
+            background-color: #e9ecef; padding: 30px; border-radius: 8px;
+        }
+        .id-card {
+            width: 270px;
+            height: 428px;
+            background: linear-gradient(135deg, #0d6efd 0%, #003380 100%);
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .id-card::before {
+            content: ''; position: absolute; top: -50px; right: -50px;
+            width: 150px; height: 150px; background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+        .id-card-header {
+            text-align: center; padding: 12px 10px 5px; font-size: 10px; font-weight: bold;
+            text-transform: uppercase; letter-spacing: 0.5px;
+            border-bottom: 2px solid #ffc107; margin-bottom: 15px; position: relative; z-index: 2;
+        }
+        .id-card-photo {
+            width: 110px; height: 130px; margin: 0 auto;
+            border: 3px solid #ffc107; border-radius: 8px;
+            overflow: hidden; background: #fff; position: relative; z-index: 2;
+        }
+        .id-card-photo img { width: 100%; height: 100%; object-fit: cover; }
+        .id-card-body { padding: 10px 15px; text-align: center; position: relative; z-index: 2; }
+        .id-card-name { font-size: 18px; font-weight: bold; margin-bottom: 2px; text-transform: uppercase; }
+        .id-card-ssb { font-size: 12px; color: #ffc107; font-weight: bold; margin-bottom: 10px; }
+        .id-card-details {
+            font-size: 11px; text-align: left; background: rgba(0,0,0,0.2);
+            padding: 8px; border-radius: 6px; margin-bottom: 10px;
+        }
+        .id-card-details table { width: 100%; color: white; margin: 0; }
+        .id-card-details td { padding: 2px 0; border: none; }
+        .id-card-footer {
+            display: flex; justify-content: space-between; align-items: flex-end;
+            padding: 0 15px; position: absolute; bottom: 15px; width: 100%; z-index: 2;
+        }
+        .qr-code { width: 55px; height: 55px; background: white; padding: 3px; border-radius: 4px; }
+        .ku-badge { font-size: 26px; font-weight: 900; color: rgba(255,255,255,0.15); position: absolute; bottom: 15px; right: 15px; z-index: 1; line-height: 1;}
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- SIDEBAR -->
+        <nav class="col-md-3 col-lg-2 d-md-block sidebar collapse p-3">
+            <h4 class="text-white text-center py-3 border-bottom border-secondary mb-3">
+                <i class="bi bi-shield-shaded text-primary"></i> Operator Panel
+            </h4>
+            <ul class="nav flex-column">
+                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-shield-fill me-2"></i> Profil Tim SSB</a></li>
+                <li class="nav-item"><a class="nav-link active" href="#"><i class="bi bi-people-fill me-2"></i> Data Pemain</a></li>
+                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-printer-fill me-2"></i> Cetak Dokumen</a></li>
+            </ul>
+        </nav>
+
+        <!-- MAIN CONTENT -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+            
+            <!-- HEADER -->
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h2 class="h3"><i class="bi bi-people-fill text-primary me-2"></i> Manajemen Data Pemain</h2>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalPemain">
+                    <i class="bi bi-plus-circle me-1"></i> Tambah Pemain Baru
+                </button>
+            </div>
+
+            <!-- FILTER & SEARCH BAR -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label small text-muted">Cari Pemain</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                                <input type="text" class="form-control" placeholder="Nama / No. Registrasi...">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label small text-muted">Filter Kategori Usia</label>
+                            <select class="form-select">
+                                <option value="">Semua Kategori</option>
+                                <option value="ku10">KU 10 (Usia 9-10 Tahun)</option>
+                                <option value="ku12">KU 12 (Usia 11-12 Tahun)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label small text-muted">Filter Status Verifikasi</label>
+                            <select class="form-select">
+                                <option value="">Semua Status</option>
+                                <option value="lolos">Lolos Verifikasi</option>
+                                <option value="menunggu">Menunggu Verifikasi</option>
+                                <option value="revisi">Revisi Dokumen</option>
+                                <option value="ditolak">Ditolak</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button class="btn btn-secondary w-100"><i class="bi bi-arrow-clockwise"></i> Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TABEL DATA PEMAIN -->
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                    <span><i class="bi bi-table me-2"></i> Daftar Pemain Terdaftar (18 Total)</span>
+                    <span class="badge bg-primary">SSB Garuda Muda Sruweng</span>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>No. Reg</th>
+                                    <th>Foto</th>
+                                    <th>Nama Lengkap & NIK</th>
+                                    <th>Kategori</th>
+                                    <th>Pos / No. Punggung</th>
+                                    <th>Dokumen (Akta/KK/KIA)</th>
+                                    <th>Status Verifikasi</th>
+                                    <th class="text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="fw-bold text-primary">GRK26-KU10-001</td>
+                                    <td><img src="https://via.placeholder.com/150" class="player-img border" alt="Foto"></td>
+                                    <td>
+                                        <strong>Rizky Pratama</strong><br>
+                                        <small class="text-muted">3305210101150001</small>
+                                    </td>
+                                    <td><span class="badge bg-info text-dark">KU 10</span></td>
+                                    <td>Striker (<strong>#10</strong>)</td>
+                                    <td>
+                                        <span class="text-success" title="Akta Valid"><i class="bi bi-file-earmark-check-fill"></i> Akta</span> | 
+                                        <span class="text-success" title="KK Valid"><i class="bi bi-file-earmark-check-fill"></i> KK</span> | 
+                                        <span class="text-success" title="KIA Valid"><i class="bi bi-file-earmark-check-fill"></i> KIA</span>
+                                    </td>
+                                    <td><span class="badge bg-success">Lolos Verifikasi</span></td>
+                                    <td class="text-center">
+                                        <button class="btn btn-sm btn-info text-white" title="Preview Kartu" data-bs-toggle="modal" data-bs-target="#modalPreviewKartu"><i class="bi bi-person-badge"></i></button>
+                                        <button class="btn btn-sm btn-warning" title="Edit"><i class="bi bi-pencil-square"></i></button>
+                                        <button class="btn btn-sm btn-danger" title="Hapus"><i class="bi bi-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold text-primary">GRK26-KU12-014</td>
+                                    <td><img src="https://via.placeholder.com/150" class="player-img border" alt="Foto"></td>
+                                    <td>
+                                        <strong>Dimas Anggara</strong><br>
+                                        <small class="text-muted">3305210303130004</small>
+                                    </td>
+                                    <td><span class="badge bg-secondary">KU 12</span></td>
+                                    <td>Kiper (<strong>#1</strong>)</td>
+                                    <td>
+                                        <span class="text-success"><i class="bi bi-file-earmark-check-fill"></i> Akta</span> | 
+                                        <span class="text-warning"><i class="bi bi-exclamation-triangle-fill"></i> KK</span> | 
+                                        <span class="text-success"><i class="bi bi-file-earmark-check-fill"></i> NISN</span>
+                                    </td>
+                                    <td><span class="badge bg-warning text-dark">Menunggu</span></td>
+                                    <td class="text-center">
+                                        <button class="btn btn-sm btn-info text-white" title="Preview Kartu" data-bs-toggle="modal" data-bs-target="#modalPreviewKartu"><i class="bi bi-person-badge"></i></button>
+                                        <button class="btn btn-sm btn-warning" title="Edit"><i class="bi bi-pencil-square"></i></button>
+                                        <button class="btn btn-sm btn-danger" title="Hapus"><i class="bi bi-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer d-flex justify-content-between align-items-center bg-white">
+                    <small class="text-muted">Menampilkan 2 dari total 18 data pemain</small>
+                    <nav>
+                        <ul class="pagination pagination-sm mb-0">
+                            <li class="page-item disabled"><a class="page-link" href="#">Sebelumnya</a></li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">Selanjutnya</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- MODAL FORM TAMBAH / EDIT PEMAIN -->
+<div class="modal fade" id="modalPemain" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title"><i class="bi bi-person-plus-fill me-2"></i> Form Data Pemain</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Nama Lengkap (Sesuai Akta)</label>
+                            <input type="text" class="form-control" placeholder="Contoh: Muhammad Rizki">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">NIK (Nomor Induk Kependudukan)</label>
+                            <input type="text" class="form-control" placeholder="16 digit angka NIK">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Tempat Lahir</label>
+                            <input type="text" class="form-control" placeholder="Contoh: Kebumen">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Tanggal Lahir (Validasi Umur Otomatis)</label>
+                            <input type="date" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label">Jenis Kelamin</label>
+                            <select class="form-select">
+                                <option>Laki-laki</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Posisi Bermain</label>
+                            <input type="text" class="form-control" placeholder="Contoh: Gelandang / Winger">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Nomor Punggung</label>
+                            <input type="number" class="form-control" placeholder="Contoh: 7">
+                        </div>
+                    </div>
+                    <hr>
+                    <h6 class="text-primary mb-3"><i class="bi bi-cloud-arrow-up-fill me-1"></i> Unggah Dokumen Pendukung (Lokal Server)</h6>
+                    <div class="row mb-2">
+                        <div class="col-md-6">
+                            <label class="form-label small">Foto Pemain (Pas Foto Resmi)</label>
+                            <input type="file" class="form-control form-control-sm" accept="image/*">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small">Akta Kelahiran (PDF / JPG)</label>
+                            <input type="file" class="form-control form-control-sm">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label small">Kartu Keluarga (KK)</label>
+                            <input type="file" class="form-control form-control-sm">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small">KIA / Ijazah / NISN</label>
+                            <input type="file" class="form-control form-control-sm">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <button type="button" class="btn btn-primary" onclick="alert('Data pemain berhasil disimpan!')">Simpan Data Pemain</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL PREVIEW KARTU PEMAIN -->
+<div class="modal fade" id="modalPreviewKartu" tabindex="-1" aria-labelledby="modalPreviewLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title" id="modalPreviewLabel"><i class="bi bi-person-badge-fill me-2"></i> Preview Kartu Pemain</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <div class="id-card-wrapper">
+                    <div class="id-card" id="printCardArea">
+                        <div class="id-card-header">
+                            Piala Disdikpora Grassroot<br>Regional Kebumen 2026
+                        </div>
+                        <div class="id-card-photo">
+                            <img src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&q=80&w=200" alt="Foto Pemain">
+                        </div>
+                        <div class="id-card-body">
+                            <div class="id-card-name">Rizky Pratama</div>
+                            <div class="id-card-ssb">SSB GARUDA MUDA SRUWENG</div>
+                            <div class="id-card-details">
+                                <table class="table-sm table-borderless">
+                                    <tr>
+                                        <td width="35%">No. Reg</td>
+                                        <td width="5%">:</td>
+                                        <td class="fw-bold">GRK26-KU10-001</td>
+                                    </tr>
+                                    <tr>
+                                        <td>TTL</td>
+                                        <td>:</td>
+                                        <td>Kebumen, 12/04/2016</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Posisi</td>
+                                        <td>:</td>
+                                        <td>Striker (10)</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="id-card-footer">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=GRK26-KU10-001" class="qr-code" alt="QR Code">
+                            <div style="font-size: 8px; text-align: right; color: rgba(255,255,255,0.7);">
+                                Disdikpora<br>Kab. Kebumen
+                            </div>
+                        </div>
+                        <div class="ku-badge">KU-10</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer bg-light">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-primary" onclick="window.print()">
+                    <i class="bi bi-printer-fill me-1"></i> Cetak Kartu Ini
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap 5 JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
