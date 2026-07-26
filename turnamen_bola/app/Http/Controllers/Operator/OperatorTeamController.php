@@ -30,12 +30,29 @@ class OperatorTeamController extends Controller
             'manager_name' => ['required', 'string', 'max:255'],
             'manager_phone' => ['required', 'string', 'max:50'],
             'age_category_id' => ['required', 'exists:age_categories,id'],
+            'logo' => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'max:2048'],
         ]);
 
+        $logoPath = $team?->logo_path;
+
+        if ($request->hasFile('logo')) {
+            $logoPath = $request->file('logo')->store('team-logos', 'public');
+        }
+
+        $teamData = [
+            'name' => $validated['name'],
+            'district' => $validated['district'],
+            'jersey_color' => $validated['jersey_color'],
+            'manager_name' => $validated['manager_name'],
+            'manager_phone' => $validated['manager_phone'],
+            'age_category_id' => $validated['age_category_id'],
+            'logo_path' => $logoPath,
+        ];
+
         if ($team) {
-            $team->update($validated);
+            $team->update($teamData);
         } else {
-            Team::create(array_merge($validated, ['operator_id' => $operator->id]));
+            Team::create(array_merge($teamData, ['operator_id' => $operator->id]));
         }
 
         // Update operator info too
