@@ -12,11 +12,21 @@ class Team extends Model
         'operator_id',
         'age_category_id',
         'name',
+        'logo_path',
         'district',
         'jersey_color',
         'manager_name',
         'manager_phone',
     ];
+
+    public function getLogoUrlAttribute(): ?string
+    {
+        if ($this->logo_path) {
+            return asset('storage/'.$this->logo_path);
+        }
+
+        return null;
+    }
 
     public function operator(): BelongsTo
     {
